@@ -9,7 +9,6 @@ shinyServer(function(input, output) {
   
   output$text1 <- renderText({
     daily.data <- clean("example.csv")
-    real.val <- round(sum(filter(daily.data,key=="daily.sum")$value)*0.02,2)
     if (input$radio == 0) {
     value <- round(sum(filter(daily.data,key=="daily.sum")$value)*0.02,2)
     } else if (input$radio == 1) {
@@ -23,6 +22,7 @@ shinyServer(function(input, output) {
   })
   
   output$text2 <- renderText({
+    real.val <- round(sum(filter(daily.data,key=="daily.sum")$value)*0.02,2)
     v.1 <- round(sum(filter(daily.data,key=="led")$value)*0.02,2)
     v.2 <- round(sum(filter(daily.data,key=="aerator")$value)*0.02,2)
     v.3 <- round(sum(filter(daily.data,key=="shower")$value)*0.02,2)
@@ -45,7 +45,8 @@ shinyServer(function(input, output) {
         theme_bw() +
         scale_x_date(labels = date_format("%m/%Y")) + 
         xlab("Date") + 
-        ylab("Daily Total kWh")
+        ylab("Daily Total kWh") +
+        guides(color=TRUE)
       if (input$checkbox == FALSE) {
         print(p)
       } else {
@@ -53,17 +54,20 @@ shinyServer(function(input, output) {
         print(p)
       }
     } else if (input$radio == 1) {
-      p <- ggplot(subset(daily.data,key=="led"),aes(Date,value)) + 
-        geom_line(aes(Date,value),subset(daily.data,key=="daily.sum"),color="grey") +
-        geom_line(color="red") + 
+      p <- ggplot(subset(daily.data,key=="led"),aes(Date,value,colour=key)) + 
+        geom_line(aes(Date,value),subset(daily.data,key=="daily.sum")) +
+        geom_line() + 
         theme_bw() +
         scale_x_date(labels = date_format("%m/%Y")) + 
         xlab("Date") + 
-        ylab("Daily Total kWh") 
+        ylab("Daily Total kWh") +
+        scale_colour_manual(name="Meaning:",
+                            labels = c("No Measures","Replace LED Bulbs"),
+                            values=c("grey","red"))
       if (input$checkbox == FALSE) {
         print(p)
       } else {
-        p <- p+stat_smooth(span=0.2) 
+        p <- p+stat_smooth(span=0.3) 
         print(p)
     }
     } else if (input$radio == 2) {
@@ -73,11 +77,14 @@ shinyServer(function(input, output) {
         theme_bw() +
         scale_x_date(labels = date_format("%m/%Y")) + 
         xlab("Date") + 
-        ylab("Daily Total kWh") 
+        ylab("Daily Total kWh") +
+        scale_colour_manual(name="Meaning:",
+                            labels = c("No Measures","Add Faucet Aerator"),
+                            values=c("grey","purple"))
       if (input$checkbox == FALSE) {
         print(p)
       } else {
-        p <- p+stat_smooth(span=0.2) 
+        p <- p+stat_smooth(span=0.3) 
         print(p)
       }
     } else if (input$radio == 3) {
@@ -87,11 +94,14 @@ shinyServer(function(input, output) {
         theme_bw() +
         scale_x_date(labels = date_format("%m/%Y")) + 
         xlab("Date") + 
-        ylab("Daily Total kWh") 
+        ylab("Daily Total kWh") +
+        scale_colour_manual(name="Meaning:",
+                            labels = c("No Measures","Add Low Flow Showerhead"),
+                            values=c("grey","green"))
       if (input$checkbox == FALSE) {
         print(p)
       } else {
-        p <- p+stat_smooth(span=0.2) 
+        p <- p+stat_smooth(span=0.3) 
         print(p)
       }
     }
