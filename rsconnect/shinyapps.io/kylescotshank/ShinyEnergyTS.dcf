@@ -3,8 +3,8 @@ title: ShinyEnergyTS
 account: kylescotshank
 server: shinyapps.io
 appId: 165561
-bundleId: 756416
+bundleId: 756425
 url: https://kylescotshank.shinyapps.io/ShinyEnergyTS/
-when: 1490115074.56401
+when: 1490115347.54901
 asMultiple: FALSE
 asStatic: FALSE

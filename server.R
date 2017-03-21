@@ -28,11 +28,11 @@ shinyServer(function(input, output) {
     v.3 <- round(sum(filter(daily.data,key=="shower")$value)*0.02,2)
     if (input$radio == 0){
     } else if (input$radio == 1){
-      paste("You will save approximately", paste("$",round(real.val-v.1,2),sep=""), "a year on your electricity bill", sep= " ")
+      paste("You will save approximately", paste("$",round(real.val-v.1,2),sep=""), "a month on your electricity bill", sep= " ")
     } else if (input$radio == 2){
-      paste("You will save approximately", paste("$",round(real.val-v.2,2),sep=""), "a year on your electricity bill", sep= " ")
+      paste("You will save approximately", paste("$",round(real.val-v.2,2),sep=""), "a month on your electricity bill", sep= " ")
     } else if (input$radio == 3){
-      paste("You will save approximately", paste("$",round(real.val-v.3,2),sep=""), "a year on your electricity bill", sep= " ")
+      paste("You will save approximately", paste("$",round(real.val-v.3,2),sep=""), "a month on your electricity bill", sep= " ")
     }
   })
   
